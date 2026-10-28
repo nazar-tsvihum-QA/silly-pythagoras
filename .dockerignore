@@ -1,0 +1,12 @@
+# Ignore files not needed in the Docker image
+node_modules
+dist
+playwright-report
+test-results
+blob-report
+.git
+.env
+.env.example
+README.md
+.gitignore
+.dockerignore

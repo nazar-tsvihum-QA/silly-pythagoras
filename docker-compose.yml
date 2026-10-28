@@ -1,0 +1,29 @@
+# ============================================================================
+# Docker Compose for Wikipedia Language Change Test
+# ============================================================================
+# Simplifies running the test in Docker with proper volume mounting
+# for the HTML report output.
+#
+# Usage:
+#   docker-compose up --build
+#   docker-compose up --build --abort-on-container-exit
+# ============================================================================
+
+services:
+  playwright-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Load credentials from .env file
+    env_file:
+      - .env
+
+    # Mount the report directory to the host so reports persist
+    # after the container exits
+    volumes:
+      - ./playwright-report:/app/playwright-report
+
+    # Use a shared memory size large enough for Chromium
+    # (Chromium uses /dev/shm for shared memory — default 64MB is too small)
+    shm_size: '2gb'
